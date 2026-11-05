@@ -149,8 +149,10 @@ header.small .nav{height:70px}
 .svc-row.active .more{max-height:260px}
 .svc-stage{position:sticky;top:110px}
 .svc-frame{position:relative;aspect-ratio:4/5;overflow:hidden;border:2px solid var(--ink);background:var(--ink)}
-.svc-frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .6s,transform 1.2s}
-.svc-frame img.show{opacity:1;transform:scale(1)}
+.svc-frame .sl{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transform:scale(1.06);transition:opacity .6s,transform 1.2s}
+.svc-frame .sl.show{opacity:1;transform:scale(1)}
+.svc-frame .split{display:grid;grid-template-rows:1fr 1fr;gap:2px;background:var(--ink)}
+.svc-frame .split img{width:100%;height:100%;object-fit:cover;min-height:0}
 .svc-frame .label{position:absolute;left:0;bottom:0;background:var(--cream);border-top:2px solid var(--ink);border-right:2px solid var(--ink);padding:12px 18px;z-index:3}
 .svc-stage .corner{position:absolute;top:-14px;right:-14px;width:64px;height:64px;border-top:4px solid var(--red);border-right:4px solid var(--red)}
 .svc-stage .corner2{position:absolute;bottom:-14px;left:-14px;width:64px;height:64px;border-bottom:4px solid var(--red);border-left:4px solid var(--red)}
@@ -525,13 +527,13 @@ footer{background:var(--ink);color:var(--cream);padding-top:80px}
       <div class="svc-stage">
         <span class="corner"></span><span class="corner2"></span>
         <div class="svc-frame" id="svcFrame">
-          <img class="show" src="images/clogged-louver.jpg" alt="Lint-clogged dryer vent louver">
-          <img src="images/bath-fan.jpg" alt="Bath fan exhaust cover being removed">
-          <img src="images/rooftop-lint.jpg" alt="Rooftop dryer vent packed with lint">
-          <img src="images/metal-vent-installed.jpg" alt="Metal dryer vent installed on a stucco wall">
-          <img src="images/duct-inside.jpg" alt="Inside view of a clean dryer duct">
-          <img src="images/vent-parts.jpg" alt="Venting parts and fittings">
-          <img src="images/sanitizing.jpg" alt="Sanitizing and disinfecting service">
+          <img class="sl show" src="images/ai-tech-laundry.jpg" alt="Technician brushing out a dryer vent duct in a laundry room">
+          <div class="sl split"><img src="images/ai-bath-fan.jpg" alt="Cleaning lint and dust from a bathroom exhaust fan"><img src="images/ai-hood-fan.jpg" alt="Wiping grease from a kitchen hood fan exhaust"></div>
+          <img class="sl" src="images/ai-ladder-vent.jpg" alt="Technician on a ladder removing a lint-clogged exterior dryer vent">
+          <img class="sl" src="images/metal-vent-installed.jpg" alt="Metal dryer vent installed on a stucco wall">
+          <img class="sl" src="images/duct-inside.jpg" alt="Inside view of a dryer duct during inspection">
+          <img class="sl" src="images/ai-coring.jpg" alt="Core drill boring a round hole through a concrete wall">
+          <img class="sl" src="images/sanitizing.jpg" alt="Sanitizing and disinfecting service">
           <div class="label mono" id="svcLabel">01 / Dryer Vent Cleaning</div>
         </div>
       </div>
@@ -559,8 +561,9 @@ footer{background:var(--ink);color:var(--cream);padding-top:80px}
     <figure class="shot"><img src="images/rooftop-cap.jpg" alt="Lint caught in a rooftop vent cap"><figcaption class="mono"><span>Rooftop vent cap</span><b>05</b></figcaption></figure>
     <figure class="shot"><img src="images/ladder-tech.jpg" alt="Technician on a ladder at a commercial building"><figcaption class="mono"><span>Commercial</span><b>06</b></figcaption></figure>
     <figure class="shot"><img src="images/lint-bucket.jpg" alt="Bucket of lint and debris"><figcaption class="mono"><span>Lint &amp; debris</span><b>07</b></figcaption></figure>
-    <figure class="shot"><img src="images/clogged-grid.jpg" alt="Clogged vent grille"><figcaption class="mono"><span>Clogged grille</span><b>08</b></figcaption></figure>
-    <figure class="shot"><img src="images/nest-closeup.jpg" alt="Nesting material inside ducting"><figcaption class="mono"><span>Nesting in ducting</span><b>09</b></figcaption></figure>
+    <figure class="shot"><img src="images/clogged-louver.jpg" alt="Lint-clogged exterior vent louver"><figcaption class="mono"><span>Clogged louver</span><b>08</b></figcaption></figure>
+    <figure class="shot"><img src="images/clogged-grid.jpg" alt="Clogged vent grille"><figcaption class="mono"><span>Clogged grille</span><b>09</b></figcaption></figure>
+    <figure class="shot"><img src="images/nest-closeup.jpg" alt="Nesting material inside ducting"><figcaption class="mono"><span>Nesting in ducting</span><b>10</b></figcaption></figure>
   </div>
 </section>
 
@@ -777,7 +780,7 @@ document.querySelectorAll('.rv').forEach(el=>io.observe(el));
 const cio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){[...e.target.querySelectorAll('.check')].forEach((c,i)=>setTimeout(()=>c.classList.add('on'),250+i*260));cio.unobserve(e.target)}}),{threshold:.35});
 cio.observe(document.querySelector('.checklist'));
 // services index
-const rows=[...document.querySelectorAll('.svc-row')],imgs=[...document.querySelectorAll('#svcFrame img')],lbl=document.getElementById('svcLabel');
+const rows=[...document.querySelectorAll('.svc-row')],imgs=[...document.querySelectorAll('#svcFrame .sl')],lbl=document.getElementById('svcLabel');
 function pick(r){rows.forEach(x=>x.classList.toggle('active',x===r));const i=+r.dataset.img;imgs.forEach((im,k)=>im.classList.toggle('show',k===i));lbl.textContent=r.querySelector('.i').textContent+' / '+r.querySelector('h3').textContent}
 rows.forEach(r=>{r.addEventListener('click',()=>pick(r));r.addEventListener('mouseenter',()=>{if(matchMedia('(hover:hover)').matches)pick(r)})});
 // gallery reel
